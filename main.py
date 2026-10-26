@@ -21,11 +21,11 @@ today_date = today.day
 today_month = today.month
 
 
-MY_EMAIL = os.environ.get("email")
-MY_PASSWORD = os.environ.get("password")
+email = os.environ.get("email")
+password = os.environ.get("password")
 
 #reciver email address
-email_reciver = 'addadh898@outlook.com'
+email_reciver = os.environ.get("email reciver")
 
 #chosing all the rows with this specific day
 birthday = birthday[(birthday['day'] == today.day) & (birthday['month'] == today_month)]
@@ -43,7 +43,7 @@ for x in birthday:
 
             connection = smtplib.SMTP('smtp.gmail.com')
             connection.starttls()
-            connection.login(user=MY_EMAIL, password=MY_PASSWORD)
-            connection.sendmail(from_addr=MY_EMAIL, to_addrs=email_reciver, msg=f"Subject: Birthday\n\n {new_msg}")
+            connection.login(user=email, password=password)
+            connection.sendmail(from_addr=email, to_addrs=email_reciver, msg=f"Subject: Birthday\n\n {new_msg}")
 
 
