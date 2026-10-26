@@ -20,13 +20,12 @@ today = dt.datetime.now()
 today_date = today.day
 today_month = today.month
 
-email = 'addadh52@gmail.com'
-password = 'udtqdqwphnyilnyf'
-#reciver email address
-email_reciver = 'addadh898@outlook.com'
 
 MY_EMAIL = os.environ.get("email")
 MY_PASSWORD = os.environ.get("password")
+
+#reciver email address
+email_reciver = 'addadh898@outlook.com'
 
 #chosing all the rows with this specific day
 birthday = birthday[(birthday['day'] == today.day) & (birthday['month'] == today_month)]
