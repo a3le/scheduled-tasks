@@ -25,6 +25,9 @@ password = 'udtqdqwphnyilnyf'
 #reciver email address
 email_reciver = 'addadh898@outlook.com'
 
+MY_EMAIL = os.environ.get("email")
+MY_PASSWORD = os.environ.get("password")
+
 #chosing all the rows with this specific day
 birthday = birthday[(birthday['day'] == today.day) & (birthday['month'] == today_month)]
 #converting the rows to dictonary to work on it
