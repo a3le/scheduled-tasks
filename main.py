@@ -21,11 +21,11 @@ today_date = today.day
 today_month = today.month
 
 
-email = os.environ.get("email")
-password = os.environ.get("password")
+email = os.environ.get("EMAIL")
+password = os.environ.get("PASSWORD")
 
 #reciver email address
-email_reciver = os.environ.get("email reciver")
+email_reciver = os.environ.get("EMAIL_RECIVER")
 
 #chosing all the rows with this specific day
 birthday = birthday[(birthday['day'] == today.day) & (birthday['month'] == today_month)]
