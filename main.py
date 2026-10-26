@@ -13,26 +13,35 @@ import smtplib
 import os
 
 # import os and use it to get the Github repository secrets
-MY_EMAIL = os.environ.get("MY_EMAIL")
-MY_PASSWORD = os.environ.get("MY_PASSWORD")
 
-today = datetime.now()
-today_tuple = (today.month, today.day)
+birthday = pd.read_csv('./birthdays.csv')
+#conver the day from a range of 0 - 6 using map and replace on the birthdays['day'] series
+today = dt.datetime.now()
+today_date = today.day
+today_month = today.month
 
-data = pandas.read_csv("birthdays.csv")
-birthdays_dict = {(data_row["month"], data_row["day"])                  : data_row for (index, data_row) in data.iterrows()}
-if today_tuple in birthdays_dict:
-    birthday_person = birthdays_dict[today_tuple]
-    file_path = f"letter_templates/letter_{random.randint(1, 3)}.txt"
-    with open(file_path) as letter_file:
-        contents = letter_file.read()
-        contents = contents.replace("[NAME]", birthday_person["name"])
+email = 'addadh52@gmail.com'
+password = 'udtqdqwphnyilnyf'
+#reciver email address
+email_reciver = 'addadh898@outlook.com'
 
-    with smtplib.SMTP("YOUR EMAIL PROVIDER SMTP SERVER ADDRESS") as connection:
-        connection.starttls()
-        connection.login(MY_EMAIL, MY_PASSWORD)
-        connection.sendmail(
-            from_addr=MY_EMAIL,
-            to_addrs=birthday_person["email"],
-            msg=f"Subject:Happy Birthday!\n\n{contents}"
-        )
+#chosing all the rows with this specific day
+birthday = birthday[(birthday['day'] == today.day) & (birthday['month'] == today_month)]
+#converting the rows to dictonary to work on it
+birthday = birthday.to_dict(orient='records')
+
+for x in birthday:
+    if len(birthday) > 0:
+        name = x['name']
+        with open(f'./letter_templates/letter_{random.randint(1,3)}.txt') as letter_file:
+            letter_msg = letter_file.readlines()
+            new_msg = [msg.replace('[NAME],\n', f'{name},\n') for msg in letter_msg]
+            new_msg = [msg.replace('Angela', 'Sami\n') for msg in new_msg]
+            message = ''.join(new_msg)
+
+            connection = smtplib.SMTP('smtp.gmail.com')
+            connection.starttls()
+            connection.login(user=email, password=password)
+            connection.sendmail(from_addr=email, to_addrs=email_reciver, msg=f"Subject: Birthday\n\n {new_msg}")
+
+
